@@ -6,6 +6,28 @@
 * MySQL
 * phpMyAdmin
 
+Structure LAMP Docker-Compose
+
+```
+├── app
+│   └── index.php
+├── docker
+│   ├── images
+│   │   ├── mysql
+│   │   │   ├── Dockerfile
+│   │   │   └── my.cnf
+│   │   └── php
+│   │       ├── Dockerfile
+│   │       └── php.ini
+│   ├── logs
+│   │   └── apache2
+│   └── volume
+│       └── mysql
+├── docker-compose.yml
+└── README.md
+
+```
+
 How to use LAMP, just build:
 
 ```
