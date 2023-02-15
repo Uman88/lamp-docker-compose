@@ -47,3 +47,5 @@ You throw your projects in the app folder, for example:
 * /app/store
 * /app/store.loc
 
+In the folder /docker/volume/mysql store your database
+
