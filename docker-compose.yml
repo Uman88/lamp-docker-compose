@@ -1,5 +1,9 @@
 version: "3.9"
 
+networks:
+  network2:
+    - network2
+
 services:
   php-apache:
     build:
@@ -14,6 +18,10 @@ services:
       - ${WORK_DIR}:/var/www/html
       - ${PHP_INI}:/usr/local/etc/php/php.ini
       - ${APACHE_LOG_VOLUME}:/var/log/apache2
+    network2:
+     - network2
+    depends_on:
+      - mysql
 
   mysql:
     build:
@@ -29,6 +37,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ${MYSQL_DATA_VOLUME}:/var/lib/mysql
+    network2:
+     - network2
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -42,3 +52,7 @@ services:
       PMA_PORT: ${HOST_MYSQL_PORT}
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
+    network2:
+     - network2
+    depends_on:
+      - mysql
