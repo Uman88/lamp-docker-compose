@@ -1,10 +1,16 @@
-version: "3.9"
+version: '3.9'
 
 networks:
   network2:
-    - network2
+    name: network2
 
 services:
+#  composer:
+#    image: composer
+#    volumes:
+#      - .:/app
+#    working_dir: /app
+
   php-apache:
     build:
       context:
@@ -18,8 +24,8 @@ services:
       - ${WORK_DIR}:/var/www/html
       - ${PHP_INI}:/usr/local/etc/php/php.ini
       - ${APACHE_LOG_VOLUME}:/var/log/apache2
-    network2:
-     - network2
+    networks:
+      - network2
     depends_on:
       - mysql
 
@@ -30,18 +36,17 @@ services:
     container_name: mysql
     restart: always
     ports:
-       - ${HOST_MYSQL_PORT}:3306
+      - ${HOST_MYSQL_PORT}:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ${MYSQL_DATA_VOLUME}:/var/lib/mysql
-    network2:
-     - network2
+    networks:
+      - network2
 
   phpmyadmin:
-    image: phpmyadmin:latest
+    image: phpmyadmin
     container_name: phpmyadmin
     restart: always
     ports:
@@ -52,7 +57,7 @@ services:
       PMA_PORT: ${HOST_MYSQL_PORT}
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
-    network2:
-     - network2
+    networks:
+      - network2
     depends_on:
       - mysql
